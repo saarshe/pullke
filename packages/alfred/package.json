@@ -1,0 +1,36 @@
+{
+  "name": "@pullke/alfred",
+  "version": "1.0.0",
+  "description": "Alfred workflow for pullke core functionality",
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "lint": "prettier --write .",
+    "lint:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@pullke/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "prettier": "^3.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "files": [
+    "dist",
+    "info.plist",
+    "icon.png"
+  ],
+  "keywords": [
+    "alfred",
+    "workflow",
+    "github",
+    "pullke"
+  ],
+  "author": "Saar Shechter",
+  "license": "MIT"
+}

@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+**/dist/
+build/
+**/build/
+
+# Cache directories
+.cache/
+**/.cache/
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage reports
+coverage/
+**/coverage/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Python cache (for reference-code)
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Vendor directories
+vendor/
+**/vendor/
+
+# Alfred workflow files
+*.alfredworkflow
+
+# Generated files
+*.d.ts.map
+*.js.map
+
+# OS files
+.DS_Store
+Thumbs.db

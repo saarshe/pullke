@@ -1,0 +1,29 @@
+{
+  "name": "pullke-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "yarn workspaces foreach --all run build",
+    "dev": "yarn workspaces foreach --all run dev",
+    "clean": "yarn workspaces foreach --all run clean",
+    "type-check": "yarn workspaces foreach --all run type-check",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "lint": "yarn workspaces foreach --all run lint",
+    "lint:check": "yarn workspaces foreach --all run lint:check"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@vitest/ui": "^3.2.4",
+    "prettier": "^3.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^3.2.4"
+  },
+  "packageManager": "yarn@4.0.0"
+}
