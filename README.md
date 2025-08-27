@@ -1,4 +1,4 @@
-# Pullke
+# Pullke 🍗
 
 A modular TypeScript library for searching GitHub repositories and pull requests with authentication, designed with a core-first architecture.
 
