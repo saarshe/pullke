@@ -79,7 +79,7 @@ const prs = await searchPullRequests({
     repo: 'react',
     states: ['open'],
     labels: ['bug', 'enhancement'],
-    author: 'gaearon'
+    author: 'saarshe'
   }
 });
 ```
