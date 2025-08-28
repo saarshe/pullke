@@ -1,4 +1,4 @@
-import { Repository } from '@pullke/core';
+import { Repository, SearchItem } from '@pullke/core';
 import { AlfredItem, AlfredResult, AlfredConfig } from './types.js';
 
 /**
@@ -26,12 +26,12 @@ export function getAlfredConfig(): AlfredConfig {
 /**
  * Create an Alfred item from a repository
  */
-export function createAlfredItem(repo: Repository): AlfredItem {
+export function createRepositoryItem(repo: Repository): AlfredItem {
   return {
     uid: repo.full_name,
     title: repo.name,
     subtitle: buildRepoSubtitle(repo),
-    arg: repo.html_url,
+    arg: repo.full_name,
     valid: true,
   };
 }
@@ -85,6 +85,68 @@ function buildRepoSubtitle(repo: Repository): string {
  */
 export function createAlfredResult(items: AlfredItem[]): AlfredResult {
   return { items };
+}
+
+/**
+ * Create an Alfred item from a pull request
+ */
+export function createPullRequestItem(pr: SearchItem): AlfredItem {
+  return {
+    uid: `pr-${pr.number}`,
+    title: `🔀 ${pr.title}`,
+    subtitle: buildPRSubtitle(pr),
+    arg: pr.html_url,
+    valid: true,
+  };
+}
+
+/**
+ * Build a descriptive subtitle for a pull request
+ */
+function buildPRSubtitle(pr: SearchItem): string {
+  const parts: string[] = [];
+
+  // PR number and author
+  parts.push(`#️⃣ ${pr.number} by 👤 ${pr.user?.login || 'unknown'}`);
+
+  // State and draft status
+  const status: string[] = [];
+  if (pr.draft) {
+    status.push('📝 draft');
+  }
+  if (pr.state === 'open') {
+    status.push('🟢 open');
+  } else if (pr.state === 'closed') {
+    if (pr.pull_request?.merged_at) {
+      status.push('🟣 merged');
+    } else {
+      status.push('🔴 closed');
+    }
+  }
+
+  if (status.length > 0) {
+    parts.push(status.join(', '));
+  }
+
+  // Updated time (relative)
+  if (pr.updated_at) {
+    const updatedDate = new Date(pr.updated_at);
+    const now = new Date();
+    const diffMs = now.getTime() - updatedDate.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) {
+      parts.push('🕐 updated today');
+    } else if (diffDays === 1) {
+      parts.push('🕐 updated yesterday');
+    } else if (diffDays < 7) {
+      parts.push(`🕐 updated ${diffDays} days ago`);
+    } else {
+      parts.push(`🕐 updated ${Math.floor(diffDays / 7)} weeks ago`);
+    }
+  }
+
+  return parts.join(' • ');
 }
 
 /**

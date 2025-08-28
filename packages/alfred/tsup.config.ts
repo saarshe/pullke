@@ -3,6 +3,7 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   entry: {
     'search-repos': 'src/search-repos.ts',
+    'search-prs': 'src/search-prs.ts',
     'test-auth': 'src/test-auth.ts',
     'clear-cache': 'src/clear-cache.ts',
   },

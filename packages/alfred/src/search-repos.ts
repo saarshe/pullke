@@ -3,7 +3,7 @@
 import { searchRepositories, getGitHubAuthErrorInfo } from '@pullke/core';
 import {
   getAlfredConfig,
-  createAlfredItem,
+  createRepositoryItem,
   createErrorItem,
   createAlfredResult,
   outputAlfredResult,
@@ -41,7 +41,7 @@ async function main() {
       return;
     }
 
-    const alfredItems = result.items.map(createAlfredItem);
+    const alfredItems = result.items.map(createRepositoryItem);
 
     console.error(
       `✅ Found ${result.total_count} repositories, returning ${alfredItems.length} items`

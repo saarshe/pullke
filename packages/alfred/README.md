@@ -1,135 +1,77 @@
 # @pullke/alfred
 
-Alfred workflow package for searching GitHub repositories using the @pullke/core functionality.
-
-## Overview
-
-This package provides TypeScript-based scripts that integrate with Alfred workflows for searching GitHub repositories. It uses the core package's `searchRepositories` function and outputs Alfred-compatible JSON for script filters.
+Alfred workflow for searching GitHub repositories and pull requests with powerful filtering and caching.
 
 ## Features
 
 - 🔍 **Repository Search**: Search across multiple GitHub organizations with keyword filtering
+- 🔀 **Pull Request Search**: Search recent PRs in any repository  
 - 🔐 **GitHub CLI Authentication**: Uses your existing `gh auth` setup
-- ⚡ **Alfred Integration**: Outputs properly formatted JSON for Alfred script filters
-- 🎯 **Modifier Support**: Built-in support for copy URL (⌘) and open PRs (⇧) actions
-- 🧹 **Cache Management**: Clear repository cache when needed
+- ⚡ **Smart Caching**: Fast results with configurable cache TTL
+- 🎯 **Alfred Actions**: Open in browser, copy URL, view PRs with keyboard modifiers
 
-## Scripts
+## Installation
 
-### search-repos.js
-Main script for searching repositories. Reads configuration from environment variables:
+### 1. Clone and Build
 
-**Environment Variables:**
-- `organizations` (required): Comma-separated list of GitHub organizations
-- `keywords` (optional): Comma-separated list of keywords to filter repositories
-- `cache_ttl_hours` (optional): Cache TTL in hours (default: 168 = 7 days)
+```bash
+# Clone the repository
+git clone https://github.com/saarshe/pullke.git
 
-**Alfred Output:**
-- **Enter**: Open repository in browser
-- **⌘+Enter**: Copy repository URL to clipboard  
-- **⇧+Enter**: Open repository's pull requests page
+# Install dependencies and build
+cd pullke
+yarn install
+yarn build
+```
 
-### test-auth.js
-Test script to verify GitHub authentication is working.
+### 2. Setup GitHub Authentication
 
-### clear-cache.js
-Script to clear the repository cache, forcing fresh data on next search.
+```bash
+# Install GitHub CLI if not already installed
+brew install gh
+
+# Authenticate with GitHub
+gh auth login
+```
+
+### 3. Download Alfred Workflow
+
+> Download link TBD
+
+After downloading, double-click the `.alfredworkflow` file to install it.
 
 ## Usage
 
-### Building
-```bash
-npm run build
-```
+### Repository Search
+Type `pullke` in Alfred → Browse repos → Select a repository:
 
-### Testing
-```bash
-# Test authentication
-npm run test:auth
+- **Enter**: Open Pull Requests search for selected repo
+- **⌘ + Enter**: Open repository in browser  
+- **⌥ + Enter**: Copy repository URL to clipboard
 
-# Test repository search with sample data
-npm run test:search
+### Pull Request Search  
+Browse recent PRs → Select a pull request:
 
-# Clear cache
-npm run clear-cache
-```
+- **Enter**: Open pull request in browser
+- **⌥ + Enter**: Copy pull request URL to clipboard
 
-### Manual Testing
-```bash
-# Search with custom parameters
-organizations="myorg,anotherorg" keywords="react,typescript" node dist/search-repos.js
+## Configuration
 
-# Test authentication
-node dist/test-auth.js
+### Environment Variables
 
-# Clear cache
-node dist/clear-cache.js
-```
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `organizations` | Comma-separated GitHub orgs to search | Required |
+| `keywords` | Filter repos by keywords | Optional |
+| `cache_ttl_hours` | Cache duration in hours | 168 (7 days) |
+| `selectedRepo` | Repository for PR search (format: owner/repo) | From Alfred query |
 
-## Alfred Integration
+## Requirements
 
-To use these scripts in an Alfred workflow:
+- **Node.js 18+**
+- **GitHub CLI** (`gh`)
+- **Alfred 4+** with Powerpack
 
-1. Build the package: `npm run build`
-2. Create a Script Filter in Alfred with:
-   - **Script**: `node /path/to/pullke/packages/alfred/dist/search-repos.js`
-   - **Language**: `/bin/bash`
-   - **Environment Variables**: Set `organizations`, `keywords`, etc.
+---
 
-3. Connect to:
-   - **Open URL Action**: For main action (Enter)
-   - **Copy to Clipboard**: For ⌘ modifier
-   - **Open URL Action**: For ⇧ modifier (add `/pulls` to URL)
-
-## Environment Configuration
-
-Set these environment variables in your Alfred workflow configuration:
-
-```bash
-organizations="microsoft,facebook,google"
-keywords="react,typescript,vue,angular"
-cache_ttl_hours="168"
-```
-
-## Authentication
-
-The scripts use GitHub CLI authentication. Ensure you have:
-
-1. GitHub CLI installed: `brew install gh`
-2. Authenticated with GitHub: `gh auth login`
-
-## Output Format
-
-The scripts output Alfred Script Filter JSON format:
-
-```json
-{
-  "items": [
-    {
-      "uid": "owner/repo-name",
-      "title": "repo-name",
-      "subtitle": "Description | Language • ⭐ stars",
-      "arg": "https://github.com/owner/repo-name",
-      "valid": true,
-    }
-  ]
-}
-```
-
-## Error Handling
-
-The scripts provide helpful error messages for common issues:
-
-- **Authentication errors**: Displays GitHub CLI setup instructions
-- **Missing configuration**: Shows which environment variables are required
-- **Network errors**: Graceful handling with user-friendly messages
-
-## Dependencies
-
-- **@pullke/core**: Core repository search functionality
-- **Node.js 18+**: Runtime environment
-- **GitHub CLI**: For authentication
-
-## Development
-
-The package follows the same patterns as your existing Python Alfred workflow but with improved TypeScript integration and better error handling.
+Made with ❤️ for faster GitHub navigation
