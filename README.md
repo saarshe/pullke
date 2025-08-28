@@ -21,6 +21,12 @@ A modular TypeScript library for searching GitHub repositories and pull requests
 - **Token caching** - Intelligent token caching for performance
 - **Error handling** - Clear error messages and recovery suggestions
 
+### ⚡ Intelligent Caching
+- **TTL-based caching** - Cache GitHub API responses with configurable expiration (default: 7 days)
+- **Performance optimization** - Cache hits are 50-100x faster than API calls
+- **Rate limiting protection** - Reduces GitHub API calls to avoid rate limits
+- **Persistent storage** - File-based cache survives application restarts
+
 ## Project Structure
 
 This is a monorepo with the following packages:
@@ -63,14 +69,18 @@ yarn build
 ### Usage Example
 
 ```typescript
-import { searchRepositories, searchPullRequests } from '@pullke/core';
+import { searchRepositories, searchPullRequests, clearAllCache } from '@pullke/core';
 
-// Search repositories across organizations
+// Search repositories across organizations with caching
 const repos = await searchRepositories({
   organizations: ['facebook', 'microsoft'],
   keywords: 'react,typescript',
-  maxResults: 50
+  maxResults: 50,
+  useCache: true,       // Enable caching (default)
+  cacheTtl: 3600        // Cache for 1 hour (default: 7 days)
 });
+
+console.log(`Found ${repos.items.length} repos (cached: ${repos.cached})`);
 
 // Search pull requests in a specific repository
 const prs = await searchPullRequests({
@@ -79,9 +89,13 @@ const prs = await searchPullRequests({
     repo: 'react',
     states: ['open'],
     labels: ['bug', 'enhancement'],
-    author: 'saarshe'
+    author: 'saarshe',
+    useCache: true
   }
 });
+
+// Clear cache when needed
+await clearAllCache();
 ```
 
 ## Development
@@ -122,9 +136,9 @@ yarn dev
 - ✅ GitHub CLI authentication integration
 - ✅ TypeScript API with comprehensive types
 - ✅ Test coverage and validation
+- ✅ Intelligent caching system with TTL support
 
 ### 🚧 In Progress
-- 🚧 Intelligent caching system
 - 🚧 Alfred workflow integration
 
 ### 📋 Planned

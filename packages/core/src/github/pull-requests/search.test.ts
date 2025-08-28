@@ -2,13 +2,21 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { searchPullRequests } from './search';
 import { createOctokitClient } from '../client';
 import { PullRequestSearchOptions } from '../../types/github';
+import { setupCacheMocks, clearCacheMocks } from '../../__tests__/test-utils';
 
 // Mock the client module
 vi.mock('../client', () => ({
   createOctokitClient: vi.fn(),
 }));
 
-// Type the mocked function
+// Mock the cache module
+vi.mock('../../cache/index', () => ({
+  getFromCacheOrFetch: vi.fn(),
+  generatePRSearchCacheKey: vi.fn(() => 'mock-pr-cache-key'),
+  generateRepoSearchCacheKey: vi.fn(() => 'mock-repo-cache-key'),
+}));
+
+// Type the mocked functions
 const mockCreateOctokitClient = vi.mocked(createOctokitClient);
 
 // Mock Octokit instance
@@ -24,10 +32,12 @@ describe('Pull Request Search Functions', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockCreateOctokitClient.mockResolvedValue(mockOctokit as any);
+    setupCacheMocks();
   });
 
   afterEach(() => {
     vi.resetAllMocks();
+    clearCacheMocks();
   });
 
   describe('searchPullRequests', () => {
