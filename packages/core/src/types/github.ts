@@ -15,9 +15,21 @@ export interface SearchOptions {
   organizations: string[];
   keywords?: string;
   useCache?: boolean;
-  cacheTtl?: number;
+  cacheTtl?: number; // TTL in seconds
   maxResults?: number;
   maxPages?: number;
+}
+
+// Cache Types
+export interface CacheEntry<T> {
+  data: T;
+  timestamp: number;
+  ttl: number; // TTL in seconds
+}
+
+export interface CacheOptions {
+  ttl?: number; // TTL in seconds, defaults to 168 hours (7 days)
+  cacheDir?: string; // Custom cache directory
 }
 
 export interface SearchResult
@@ -46,6 +58,8 @@ export interface PullRequestSearchOptions {
   dateTo?: string; // ISO date string
   maxResults?: number;
   maxPages?: number;
+  useCache?: boolean;
+  cacheTtl?: number; // TTL in seconds
 }
 
 export interface PullRequestSearchResult {

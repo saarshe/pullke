@@ -3,7 +3,12 @@ import { createOctokitClient } from '../client';
 import {
   PullRequestSearchOptions,
   PullRequestSearchResult,
+  SearchItem,
 } from '../../types/github';
+import {
+  getFromCacheOrFetch,
+  generatePRSearchCacheKey,
+} from '../../cache/index';
 
 /**
  * Search pull requests in a specific repository using GitHub Search API
@@ -14,38 +19,50 @@ export async function searchPullRequests({
   options: PullRequestSearchOptions;
 }): Promise<PullRequestSearchResult> {
   try {
-    const octokit = await createOctokitClient();
-    console.debug(
-      `🔍 Searching pull requests in ${options.owner}/${options.repo} using Search API...`
-    );
+    // Check if caching is enabled (default: true)
+    const useCache = options.useCache !== false;
 
-    const query = buildSearchQuery(options);
-    console.debug(`📝 Search query: "${query}"`);
+    if (useCache) {
+      // Generate cache key based on search parameters
+      const cacheKey = generatePRSearchCacheKey(options.owner, options.repo, {
+        states: options.states,
+        sort: options.sort,
+        order: options.order,
+        author: options.author,
+        assignee: options.assignee,
+        labels: options.labels,
+        reviewStatus: options.reviewStatus,
+        query: options.query,
+        dateFrom: options.dateFrom,
+        dateTo: options.dateTo,
+        maxResults: options.maxResults,
+      });
 
-    const searchParams = {
-      q: query,
-      per_page: Math.min(options.maxResults || 100, 100),
-      sort: (options.sort === 'created' ? 'created' : 'updated') as
-        | 'created'
-        | 'updated',
-      order: (options.order === 'asc' ? 'asc' : 'desc') as 'asc' | 'desc',
-      advanced_search: 'true',
-    };
+      // Try to get cached result or fetch fresh data
+      const result = await getFromCacheOrFetch({
+        key: cacheKey,
+        fetchFn: () => fetchPullRequestsFromGitHub(options),
+        customTtl: options.cacheTtl,
+      });
 
-    const searchResult =
-      await octokit.rest.search.issuesAndPullRequests(searchParams);
-
-    const pullRequests = searchResult.data.items;
-
-    console.debug(`✅ Found ${pullRequests.length} pull requests`);
-
-    return {
-      success: true,
-      items: pullRequests,
-      total_count: searchResult.data.total_count,
-      incomplete_results: searchResult.data.incomplete_results,
-      cached: false,
-    };
+      return {
+        success: true,
+        items: result.data.items,
+        total_count: result.data.total_count,
+        incomplete_results: result.data.incomplete_results,
+        cached: result.cached,
+      };
+    } else {
+      // Skip cache and fetch directly
+      const prResult = await fetchPullRequestsFromGitHub(options);
+      return {
+        success: true,
+        items: prResult.items,
+        total_count: prResult.total_count,
+        incomplete_results: prResult.incomplete_results,
+        cached: false,
+      };
+    }
   } catch (error) {
     console.error('❌ Pull request search failed:', error);
     return {
@@ -56,6 +73,48 @@ export async function searchPullRequests({
       error: error instanceof Error ? error.message : 'Unknown error',
     };
   }
+}
+
+/**
+ * Fetch pull requests from GitHub (without caching)
+ */
+async function fetchPullRequestsFromGitHub(
+  options: PullRequestSearchOptions
+): Promise<{
+  items: SearchItem[];
+  total_count: number;
+  incomplete_results: boolean;
+}> {
+  const octokit = await createOctokitClient();
+  console.error(
+    `🔍 Searching pull requests in ${options.owner}/${options.repo} using Search API...`
+  );
+
+  const query = buildSearchQuery(options);
+  console.error(`📝 Search query: "${query}"`);
+
+  const searchParams = {
+    q: query,
+    per_page: Math.min(options.maxResults || 100, 100),
+    sort: (options.sort === 'created' ? 'created' : 'updated') as
+      | 'created'
+      | 'updated',
+    order: (options.order === 'asc' ? 'asc' : 'desc') as 'asc' | 'desc',
+    advanced_search: 'true',
+  };
+
+  const searchResult =
+    await octokit.rest.search.issuesAndPullRequests(searchParams);
+
+  const pullRequests = searchResult.data.items;
+
+  console.error(`✅ Found ${pullRequests.length} pull requests`);
+
+  return {
+    items: pullRequests,
+    total_count: searchResult.data.total_count,
+    incomplete_results: searchResult.data.incomplete_results,
+  };
 }
 
 /**

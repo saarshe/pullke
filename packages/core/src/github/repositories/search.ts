@@ -1,6 +1,10 @@
 import { Octokit } from '@octokit/rest';
 import { createOctokitClient } from '../client';
 import { Repository, SearchOptions, SearchResult } from '../../types/github';
+import {
+  generateRepoSearchCacheKey,
+  getFromCacheOrFetch,
+} from '../../cache/index';
 
 /**
  * Search repositories across multiple organizations
@@ -9,56 +13,38 @@ export async function searchRepositories(
   options: SearchOptions
 ): Promise<SearchResult> {
   try {
-    const octokit = await createOctokitClient();
-    const allRepos: Repository[] = [];
+    const useCache = options.useCache ?? true;
 
-    console.debug(
-      `🔍 Searching in ${options.organizations.length} organizations...`
-    );
-
-    for (const org of options.organizations) {
-      console.debug(`   Searching in organization: ${org}`);
-
-      const queryParts = [`org:${org}`];
-
-      if (options.keywords) {
-        const keywordList = options.keywords
-          .split(',')
-          .map(k => k.trim())
-          .filter(Boolean);
-        if (keywordList.length > 0) {
-          const keywordsOr = keywordList.join(' OR ');
-          queryParts.push(`(${keywordsOr})`);
-        }
-      }
-
-      const searchQuery = queryParts.join(' ');
-      console.debug(`   Query: ${searchQuery}`);
-
-      const orgRepos = await searchRepositoriesInOrg(
-        octokit,
-        searchQuery,
-        options
+    if (useCache) {
+      const cacheKey = generateRepoSearchCacheKey(
+        options.organizations,
+        options.keywords
       );
-      allRepos.push(...orgRepos);
 
-      console.debug(`   Found ${orgRepos.length} repos in ${org}`);
+      const result = await getFromCacheOrFetch({
+        key: cacheKey,
+        fetchFn: () => fetchRepositoriesFromGitHub(options),
+        customTtl: options.cacheTtl,
+      });
+
+      return {
+        success: true,
+        items: result.data,
+        total_count: result.data.length,
+        incomplete_results: false,
+        cached: result.cached,
+      };
+    } else {
+      // Skip cache and fetch directly
+      const repos = await fetchRepositoriesFromGitHub(options);
+      return {
+        success: true,
+        items: repos,
+        total_count: repos.length,
+        incomplete_results: false,
+        cached: false,
+      };
     }
-
-    // Remove duplicates by full_name
-    const uniqueRepos = Array.from(
-      new Map(allRepos.map(repo => [repo.full_name, repo])).values()
-    );
-
-    console.debug(`✅ Total unique repositories found: ${uniqueRepos.length}`);
-
-    return {
-      success: true,
-      items: uniqueRepos,
-      total_count: uniqueRepos.length,
-      incomplete_results: false,
-      cached: false,
-    };
   } catch (error) {
     console.error('❌ Repository search failed:', error);
     return {
@@ -69,6 +55,57 @@ export async function searchRepositories(
       error: error instanceof Error ? error.message : 'Unknown error',
     };
   }
+}
+
+/**
+ * Fetch repositories from GitHub (without caching)
+ */
+async function fetchRepositoriesFromGitHub(
+  options: SearchOptions
+): Promise<Repository[]> {
+  const octokit = await createOctokitClient();
+  const allRepos: Repository[] = [];
+
+  console.error(
+    `🔍 Searching in ${options.organizations.length} organizations...`
+  );
+
+  for (const org of options.organizations) {
+    console.error(`   Searching in organization: ${org}`);
+
+    const queryParts = [`org:${org}`];
+
+    if (options.keywords) {
+      const keywordList = options.keywords
+        .split(',')
+        .map(k => k.trim())
+        .filter(Boolean);
+      if (keywordList.length > 0) {
+        const keywordsOr = keywordList.join(' OR ');
+        queryParts.push(`(${keywordsOr})`);
+      }
+    }
+
+    const searchQuery = queryParts.join(' ');
+    console.error(`   Query: ${searchQuery}`);
+
+    const orgRepos = await searchRepositoriesInOrg(
+      octokit,
+      searchQuery,
+      options
+    );
+    allRepos.push(...orgRepos);
+
+    console.error(`   Found ${orgRepos.length} repos in ${org}`);
+  }
+
+  // Remove duplicates by full_name
+  const uniqueRepos = Array.from(
+    new Map(allRepos.map(repo => [repo.full_name, repo])).values()
+  );
+
+  console.error(`✅ Total unique repositories found: ${uniqueRepos.length}`);
+  return uniqueRepos;
 }
 
 /**
@@ -96,7 +133,7 @@ async function searchRepositoriesInOrg(
       const pageRepos = response.data.items;
       repos.push(...pageRepos);
 
-      console.debug(
+      console.error(
         `     Page ${page}: ${pageRepos.length} repos (total: ${repos.length})`
       );
 
