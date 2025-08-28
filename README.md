@@ -1,5 +1,9 @@
 # Pullke 🍗
 
+<div align="center">
+  <img src="assets/pullke_logo.png" alt="Pullke Logo" width="200">
+</div>
+
 A modular TypeScript library for searching GitHub repositories and pull requests with authentication, designed with a core-first architecture.
 
 ## Features
