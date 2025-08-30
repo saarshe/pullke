@@ -49,7 +49,7 @@ try {
     await cp(join(DIST_DIR, file), join(tempDistDir, file));
   }
 
-  // Create the .alfredworkflow file (which is just a renamed zip)
+  // Create the .alfredworkflow file
   const WORKFLOW_FILE = join(OUTPUT_DIR, 'Pullke.alfredworkflow');
   console.log('🗜️  Creating workflow package...');
   
