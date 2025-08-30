@@ -36,7 +36,7 @@ A modular TypeScript library for searching GitHub repositories and pull requests
 This is a monorepo with the following packages:
 
 - **`@pullke/core`** - Core functionality for GitHub API interactions, search, and authentication
-- **`@pullke/alfred`** - Alfred workflow consumer (planned)
+- **`@pullke/alfred`** - Alfred workflow for quick GitHub repository and pull request search
 
 ## Architecture
 
@@ -102,6 +102,22 @@ const prs = await searchPullRequests({
 await clearAllCache();
 ```
 
+### Alfred Workflow
+
+For macOS users, install the Alfred workflow for quick GitHub navigation (requires Alfred Powerpack):
+
+```bash
+# Build and install the workflow
+yarn build:alfred
+open packages/alfred/build/Pullke.alfredworkflow
+```
+
+After installation, configure your organizations and keywords in Alfred's workflow settings, then use:
+- `pullke repo` - Search repositories
+- `pullke cc` - Clear cache
+
+See the [Alfred package README](packages/alfred/README.md) for detailed usage instructions.
+
 ## Development
 
 ### Setup
@@ -141,9 +157,10 @@ yarn dev
 - ✅ TypeScript API with comprehensive types
 - ✅ Test coverage and validation
 - ✅ Intelligent caching system with TTL support
+- ✅ Alfred workflow integration with installable package
 
 ### 🚧 In Progress
-- 🚧 Alfred workflow integration
+- 🚧 GitHub releases and workflow distribution
 
 ### 📋 Planned
 - 📋 CLI tool

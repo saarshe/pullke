@@ -6,24 +6,28 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist build",
     "type-check": "tsc --noEmit",
     "lint": "prettier --write .",
-    "lint:check": "prettier --check ."
+    "lint:check": "prettier --check .",
+    "build:workflow": "node ./scripts/build-workflow.mjs"
   },
   "dependencies": {
     "@pullke/core": "workspace:*"
   },
   "devDependencies": {
+    "@types/archiver": "^6.0.3",
     "@types/node": "^20.0.0",
+    "archiver": "^7.0.1",
     "prettier": "^3.0.0",
     "tsup": "^8.0.0",
     "typescript": "^5.0.0"
   },
   "files": [
     "dist",
-    "info.plist",
-    "icon.png"
+    "workflow",
+    "scripts",
+    "build"
   ],
   "keywords": [
     "alfred",

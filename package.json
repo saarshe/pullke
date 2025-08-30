@@ -15,7 +15,8 @@
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
     "lint": "yarn workspaces foreach --all run lint",
-    "lint:check": "yarn workspaces foreach --all run lint:check"
+    "lint:check": "yarn workspaces foreach --all run lint:check",
+    "build:alfred": "yarn workspace @pullke/alfred build:workflow"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",

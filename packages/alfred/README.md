@@ -34,11 +34,20 @@ brew install gh
 gh auth login
 ```
 
-### 3. Download Alfred Workflow
+### 3. Install Alfred Workflow
 
-> Download link TBD
+#### Option A: Build from Source (Latest)
+```bash
+# In the project root
+cd packages/alfred
+yarn build:workflow
 
-After downloading, double-click the `.alfredworkflow` file to install it.
+# Install the generated file
+open build/Pullke.alfredworkflow
+```
+
+#### Option B: Download Release
+Download the latest `Pullke.alfredworkflow` from the [Releases page](https://github.com/saarshe/pullke/releases) and double-click to install.
 
 ## Usage
 
