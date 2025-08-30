@@ -417,166 +417,59 @@
 		</dict>
 	</array>
 	<key>readme</key>
-	<string># Pullke - GitHub Repository Search Alfred Workflow
+	<string># Pullke Alfred Workflow
 
-A powerful Alfred workflow for quickly searching and navigating GitHub repositories within specified organizations. Built with intelligent caching and flexible authentication options.
-
-## Features
-
-- 🔍 **Smart Repository Search**: Search repositories across multiple GitHub organizations with keyword filtering
-- ⚡ **Intelligent Caching**: Configurable cache system (default 7 days) for fast subsequent searches
-- 🔐 **Flexible Authentication**: Supports both GitHub CLI and environment token authentication
-- 🎯 **Keyword Filtering**: Filter repositories by specific keywords to find relevant projects quickly
-- 📋 **Multiple Actions**: Open repositories, copy URLs, or navigate to pull requests
-- 🧹 **Cache Management**: Easy cache clearing functionality
-
-## Installation
-
-1. Download and install the workflow in Alfred
-2. Configure your authentication (see Authentication section below)
-3. Set up your organizations and keywords in the workflow configuration
-
-## Authentication
-
-The workflow supports two authentication methods (in order of priority):
-
-### 1. GitHub CLI (Recommended)
-```bash
-# Install GitHub CLI
-brew install gh
-
-# Authenticate with GitHub
-gh auth login
-```
-
-### 2. Environment Variable
-Set the `GITHUB_TOKEN` environment variable with a GitHub personal access token:
-```bash
-export GITHUB_TOKEN="your_github_token_here"
-```
+Alfred workflow for searching GitHub repositories and pull requests.
 
 ## Configuration
 
-Configure the workflow through Alfred's workflow configuration:
+After installation, configure in Alfred's workflow settings:
 
-### Required Settings
+1. **Organizations** - GitHub orgs to search (required)
+   - Example: `mycompany, facebook, microsoft`
 
-1. **Organizations**: Comma-separated list of GitHub organizations to search
-   - Example: `myorg, anotherorg, thirdorg`
+2. **Keywords** - Repository types to find (required)
+   - Example: `react, api, mobile, frontend, typescript`
+   - Matches repository names, descriptions, and topics
 
-2. **Keywords**: Comma-separated list of keywords to filter repositories
-   - Example: `api, frontend, backend, mobile`
-   - Repositories matching ANY of these keywords will be included
+3. **Include My Repositories** - Also show your personal repos
+   - No keyword filtering applied to personal repos
 
-### Optional Settings
-
-3. **Cache TTL (hours)**: How long to cache repository data (default: 168 hours / 7 days)
-   - Range: 0-730 hours (0 = no caching, not recommended)
-   - Higher values = faster searches but potentially stale data
-   - Lower values = fresher data but slower searches
+4. **Cache Duration** - How long to cache results (default: 1 week)
+   - Longer = faster, shorter = fresher data
 
 ## Usage
 
-### Main Search Command
-```
-git [search term]
-```
-- Searches through cached repositories
-- Alfred's built-in filtering will narrow results as you type
-- Shows repository name, description, language, and star count
+### Search Repositories
+- `pullke repo` - Search and browse repositories
+- Select any repository from the results to see available actions
+- `pullke cc` - Clear cache and force a fresh search on the next call
 
-### Actions Available
+### Actions on Selected Repository
+- **Enter** - Browse pull requests for the selected repository
+- **⌘ + Enter** - Open repository in browser  
+- **⌥ + Enter** - Copy repository URL to clipboard
 
-1. **Enter**: Open repository in browser
-2. **Cmd+Enter**: Copy repository URL to clipboard  
-3. **Shift+Enter**: Open repository's pull requests page
+### Workflow
+1. Type `pullke repo` to search repositories
+2. Select a repository from the results
+3. Choose an action (Enter for pull requests, ⌘+Enter for browser, ⌥+Enter to copy URL)
 
-### Cache Management
-```
-git cc
-```
-- Clears the repository cache
-- Next search will fetch fresh data from GitHub
-- Useful when you've added new repositories or changed configuration
+## Requirements
 
-## How It Works
+- GitHub CLI (`gh`) or `GITHUB_TOKEN` environment variable
+- Organizations and keywords configured in workflow settings
 
-1. **First Run**: Fetches repositories from GitHub API using search queries
-2. **Caching**: Stores results locally for fast subsequent searches
-3. **Search Strategy**: 
-   - Searches each organization with OR logic for keywords
-   - Combines results from all organizations
-   - Removes duplicates and sorts by last updated
-4. **Alfred Integration**: Returns formatted results for Alfred's script filter
+## Links
 
-## API Usage
+- **GitHub Repository**: https://github.com/saarshe/pullke
+- **Issues &amp; Support**: https://github.com/saarshe/pullke/issues
+- **Latest Releases**: https://github.com/saarshe/pullke/releases
+- **Productivity Blog**: https://medium.com/@saar_shechter
 
-The workflow uses GitHub's Search API with the following strategy:
+---
 
-- **Endpoint**: `https://api.github.com/search/repositories`
-- **Query Format**: `org:{organization} ({keyword1} OR {keyword2} OR ...)`
-- **Sorting**: By last updated (most recent first)
-- **Pagination**: Fetches up to 1000 results per organization (API limit)
-- **Rate Limiting**: Respects GitHub API rate limits
-
-## Caching System
-
-- **Location**: `~/.cache/alfred_github/repos.json`
-- **TTL**: Configurable (default 7 days)
-- **Validation**: Checks file modification time against TTL
-- **Storage**: JSON format with repository metadata
-
-## Error Handling
-
-The workflow provides helpful error messages for common issues:
-
-- **GitHub CLI not installed**: Suggests `brew install gh`
-- **GitHub CLI not authenticated**: Suggests `gh auth login`
-- **Missing organizations**: Prompts to configure organizations
-- **API errors**: Shows specific error messages
-- **Network issues**: Graceful degradation with error reporting
-
-## Troubleshooting
-
-### No repositories found
-1. Check your organizations are spelled correctly
-2. Verify your authentication is working
-3. Ensure keywords match repositories in those organizations
-4. Try clearing cache with `git cc`
-
-### Authentication issues
-1. Run `gh auth status` to check GitHub CLI authentication
-2. Verify `GITHUB_TOKEN` environment variable if using token auth
-3. Check token has appropriate repository access permissions
-
-### Slow performance
-1. Reduce cache TTL for more frequent updates
-2. Narrow down keywords to reduce result set
-3. Check network connectivity
-
-## Dependencies
-
-- **Python 3.6+**: Required for the workflow
-- **requests**: HTTP library for GitHub API calls
-- **GitHub CLI** (optional): For authentication
-
-## Contributing
-
-The workflow is designed to be easily extensible:
-
-- Add new authentication methods in `auth.py`
-- Extend search functionality in `utils.py`
-- Add new actions by modifying `info.plist` connections
-
-## License
-
-Created by Saar Shechter. See workflow configuration for attribution details.
-
-## Version
-
-Current version: 1.0.0
-
----</string>
+Created by Saar Shechter</string>
 	<key>uidata</key>
 	<dict>
 		<key>28A7B116-CF4B-4561-A0C6-20C63C976D52</key>
@@ -715,7 +608,7 @@ Current version: 1.0.0
 			<key>config</key>
 			<dict>
 				<key>default</key>
-				<false/>
+				<true/>
 			</dict>
 			<key>description</key>
 			<string>Also show your personal GitHub repositories alongside organization repos. Your personal repos won't be filtered by keywords.</string>
