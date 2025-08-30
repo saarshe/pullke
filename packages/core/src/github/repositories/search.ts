@@ -90,7 +90,7 @@ async function fetchRepositoriesFromGitHub(
     const searchQuery = queryParts.join(' ');
     console.error(`   Query: ${searchQuery}`);
 
-    const orgRepos = await searchRepositoriesInOrg(
+    const orgRepos = await searchRepositoriesInOrgOrUser(
       octokit,
       searchQuery,
       options
@@ -106,7 +106,7 @@ async function fetchRepositoriesFromGitHub(
     const userQuery = 'user:@me';
     console.error(`   Query: ${userQuery}`);
 
-    const userRepos = await searchRepositoriesInOrg(
+    const userRepos = await searchRepositoriesInOrgOrUser(
       octokit,
       userQuery,
       options
@@ -126,9 +126,9 @@ async function fetchRepositoriesFromGitHub(
 }
 
 /**
- * Search repositories in a single organization with pagination
+ * Search repositories in a single organization or user with pagination
  */
-async function searchRepositoriesInOrg(
+async function searchRepositoriesInOrgOrUser(
   octokit: Octokit,
   query: string,
   options: SearchOptions
