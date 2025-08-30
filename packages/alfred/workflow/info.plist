@@ -682,7 +682,7 @@ Current version: 1.0.0
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>Organizations in which to search for repositories</string>
+			<string>GitHub organizations to search (e.g., your company, facebook, microsoft). Separate multiple organizations with commas.</string>
 			<key>label</key>
 			<string>Organizations</string>
 			<key>type</key>
@@ -703,13 +703,28 @@ Current version: 1.0.0
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>The keywords that will be used in the repositories filter query. Enter keywords found in repositories that you want to get in the filtered result. Enter the keywords separated by commas</string>
+			<string>Filter repositories by technology or topic (e.g., react, api, mobile). Only repos matching these keywords will be shown. Required for good performance with large organizations.</string>
 			<key>label</key>
 			<string>Keywords</string>
 			<key>type</key>
 			<string>textfield</string>
 			<key>variable</key>
 			<string>keywords</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<false/>
+			</dict>
+			<key>description</key>
+			<string>Also show your personal GitHub repositories alongside organization repos. Your personal repos won't be filtered by keywords.</string>
+			<key>label</key>
+			<string>Include My Repositories</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>include_user_repos</string>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -728,7 +743,7 @@ Current version: 1.0.0
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>How many minutes will pass until the cache is invalidated. Default is 168 hours (7 days), max is 730 (1 month). 0 means no caching (not recommended, as the querying process takes a few seconds)</string>
+			<string>How long to remember search results before fetching fresh data from GitHub. Longer = faster searches, shorter = more up-to-date results. Default: 1 week.</string>
 			<key>label</key>
 			<string>Cache TTL (hours)</string>
 			<key>type</key>

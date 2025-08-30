@@ -18,7 +18,8 @@ export async function searchRepositories(
     if (useCache) {
       const cacheKey = generateRepoSearchCacheKey(
         options.organizations,
-        options.keywords
+        options.keywords,
+        options.includeCurrentUser
       );
 
       const result = await getFromCacheOrFetch({
@@ -97,6 +98,22 @@ async function fetchRepositoriesFromGitHub(
     allRepos.push(...orgRepos);
 
     console.error(`   Found ${orgRepos.length} repos in ${org}`);
+  }
+
+  if (options.includeCurrentUser) {
+    console.error(`   Searching in current user's repositories...`);
+
+    const userQuery = 'user:@me';
+    console.error(`   Query: ${userQuery}`);
+
+    const userRepos = await searchRepositoriesInOrg(
+      octokit,
+      userQuery,
+      options
+    );
+    allRepos.push(...userRepos);
+
+    console.error(`   Found ${userRepos.length} repos in current user`);
   }
 
   // Remove duplicates by full_name

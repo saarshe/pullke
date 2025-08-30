@@ -1,172 +1,49 @@
 # Pullke 🍗
 
 <div align="center">
-  <img src="assets/pullke_logo.png" alt="Pullke Logo" width="200">
+  <img src="packages/alfred/workflow/icon.png" alt="Pullke Logo" width="200">
 </div>
 
-A modular TypeScript library for searching GitHub repositories and pull requests with authentication, designed with a core-first architecture.
+Quickly search GitHub repositories and pull requests across multiple organizations with smart caching.
 
 ## Features
 
-### 🔍 Repository Search
-- **Multi-organization search** - Search across multiple GitHub organizations simultaneously
-- **Keyword filtering** - Filter repositories by keywords with OR logic support
-- **Intelligent pagination** - Automatic handling of GitHub API pagination limits
-- **Flexible results** - Configurable result limits and sorting options
+- 🔍 **Find repositories fast** - Search across multiple organizations with keyword filtering
+- 🔀 **Browse pull requests** - Filter by status, author, labels, and dates
+- 🔐 **Easy authentication** - Works with GitHub CLI (`gh auth login`)
+- ⚡ **Smart caching** - Remembers results locally for faster searches (no data sent to external servers)
+- 🎯 **Alfred integration** - Quick access from macOS Alfred launcher
 
-### 🔀 Pull Request Search  
-- **Advanced filtering** - Search by state (open/closed/merged/draft), author, assignee, labels
-- **Date range queries** - Filter PRs by creation date ranges
-- **Text search** - Search within PR titles and descriptions
-- **Comprehensive sorting** - Sort by creation date or last updated
+## Packages
 
-### 🔐 Authentication
-- **GitHub CLI integration** - Seamless authentication via `gh auth token`
-- **Token caching** - Intelligent token caching for performance
-- **Error handling** - Clear error messages and recovery suggestions
-
-### ⚡ Intelligent Caching
-- **TTL-based caching** - Cache GitHub API responses with configurable expiration (default: 7 days)
-- **Performance optimization** - Cache hits are 50-100x faster than API calls
-- **Rate limiting protection** - Reduces GitHub API calls to avoid rate limits
-- **Persistent storage** - File-based cache survives application restarts
-
-## Project Structure
-
-This is a monorepo with the following packages:
-
-- **`@pullke/core`** - Core functionality for GitHub API interactions, search, and authentication
-- **`@pullke/alfred`** - Alfred workflow for quick GitHub repository and pull request search
-
-## Architecture
-
-The project follows a core-first architecture where:
-
-1. **Core Package** (`@pullke/core`) contains all the business logic
-2. **Consumer Packages** (like `@pullke/alfred`) use the core functionality and provide different interfaces
-
-This approach allows for:
-
-- 🎯 **Modularity**: Clear separation of concerns
-- 🔧 **Extensibility**: Easy to add new consumers (CLI, browser extensions, etc.)
-- 📦 **Shareability**: Core can be used independently
-- 🧪 **Testability**: Core logic can be tested in isolation
+- **[@pullke/core](packages/core/)** - Core GitHub API functionality
+- **[@pullke/alfred](packages/alfred/)** - Alfred workflow for macOS
 
 ## Quick Start
 
-### Prerequisites
+### Alfred Workflow (macOS)
 
-- Node.js 18+
-- Yarn 4.x
-- GitHub CLI (`gh`) installed and authenticated
+1. Download `Pullke.alfredworkflow` from [Releases](https://github.com/saarshe/pullke/releases)
+2. Double-click to install in Alfred
+3. Configure organizations and keywords in Alfred's workflow settings
+4. Use `pullke repo` to search repositories
 
-### Installation
-
-```bash
-# Install dependencies for all packages
-yarn install
-
-# Build all packages
-yarn build
-```
-
-### Usage Example
-
-```typescript
-import { searchRepositories, searchPullRequests, clearAllCache } from '@pullke/core';
-
-// Search repositories across organizations with caching
-const repos = await searchRepositories({
-  organizations: ['facebook', 'microsoft'],
-  keywords: 'react,typescript',
-  maxResults: 50,
-  useCache: true,       // Enable caching (default)
-  cacheTtl: 3600        // Cache for 1 hour (default: 7 days)
-});
-
-console.log(`Found ${repos.items.length} repos (cached: ${repos.cached})`);
-
-// Search pull requests in a specific repository
-const prs = await searchPullRequests({
-  options: {
-    owner: 'facebook',
-    repo: 'react',
-    states: ['open'],
-    labels: ['bug', 'enhancement'],
-    author: 'saarshe',
-    useCache: true
-  }
-});
-
-// Clear cache when needed
-await clearAllCache();
-```
-
-### Alfred Workflow
-
-For macOS users, install the Alfred workflow for quick GitHub navigation (requires Alfred Powerpack):
+## Contributing
 
 ```bash
-# Build and install the workflow
+# Clone and setup
+git clone https://github.com/saarshe/pullke.git
+cd pullke
+yarn install && yarn build
+
+# Development
+yarn dev          # Watch mode for all packages
+yarn test         # Run tests
+yarn type-check   # TypeScript validation
+
+# Build Alfred workflow
 yarn build:alfred
-open packages/alfred/build/Pullke.alfredworkflow
 ```
-
-After installation, configure your organizations and keywords in Alfred's workflow settings, then use:
-- `pullke repo` - Search repositories
-- `pullke cc` - Clear cache
-
-See the [Alfred package README](packages/alfred/README.md) for detailed usage instructions.
-
-## Development
-
-### Setup
-
-```bash
-# Development mode (watches for changes)
-yarn dev
-
-# Type checking
-yarn type-check
-
-# Clean all build outputs
-yarn clean
-
-# Run tests
-yarn test
-```
-
-### Working with specific packages
-
-```bash
-# Work on core package
-cd packages/core
-yarn dev
-
-# Work on alfred package
-cd packages/alfred
-yarn dev
-```
-
-## Roadmap
-
-### ✅ Completed
-- ✅ GitHub repository search with organization filtering
-- ✅ Pull request search with advanced filtering
-- ✅ GitHub CLI authentication integration
-- ✅ TypeScript API with comprehensive types
-- ✅ Test coverage and validation
-- ✅ Intelligent caching system with TTL support
-- ✅ Alfred workflow integration with installable package
-
-### 🚧 In Progress
-- 🚧 GitHub releases and workflow distribution
-
-### 📋 Planned
-- 📋 CLI tool
-- 📋 Browser extensions
-- 📋 VS Code extension
-- 📋 Additional authentication methods (personal tokens, OAuth)
 
 ## License
 

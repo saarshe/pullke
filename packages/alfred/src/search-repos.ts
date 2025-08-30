@@ -20,6 +20,7 @@ async function main() {
       keywords: config.keywords,
       maxResults: 1000,
       maxPages: 10,
+      includeCurrentUser: config.includeUserRepos,
     });
 
     if (!result.success) {
