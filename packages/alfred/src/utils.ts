@@ -8,6 +8,7 @@ export function getAlfredConfig(): AlfredConfig {
   const organizations = process.env.organizations;
   const keywords = process.env.keywords;
   const cacheTtlHours = process.env.cache_ttl_hours;
+  const includeUserRepos = process.env.include_user_repos;
 
   if (!organizations) {
     throw new Error('organizations environment variable is required');
@@ -20,6 +21,7 @@ export function getAlfredConfig(): AlfredConfig {
       .filter(Boolean),
     keywords: keywords?.trim() || undefined,
     cacheTtlHours: cacheTtlHours ? parseInt(cacheTtlHours, 10) : 168, // Default 7 days
+    includeUserRepos: includeUserRepos === '1' || includeUserRepos === 'true',
   };
 }
 

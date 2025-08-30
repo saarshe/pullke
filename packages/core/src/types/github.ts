@@ -18,6 +18,7 @@ export interface SearchOptions {
   cacheTtl?: number; // TTL in seconds
   maxResults?: number;
   maxPages?: number;
+  includeCurrentUser?: boolean;
 }
 
 // Cache Types

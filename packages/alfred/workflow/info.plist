@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>28A7B116-CF4B-4561-A0C6-20C63C976D52</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>990CC253-1762-47B4-AB57-58A7115E06D8</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>Copy repo URL to clipboard</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>F9A81801-21B9-4EB9-A1E5-B7243E7B1F86</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>OPEN_URL_ACTION_UID</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>Open repository URL in default browser</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>3FC811DC-DA74-4674-8890-DD1CD15AE2D7</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>EB551213-C0B3-470A-BEB4-5B811BB48FC3</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>75C2A185-CAEB-436C-9005-A40D90E2595F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D1361E2F-0F73-49FB-944D-70D83C046ECD</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>Copy repo URL to clipboard</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>A89C2559-F0A8-4888-9829-D82068604EFA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>EB551213-C0B3-470A-BEB4-5B811BB48FC3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3BF5D60F-8594-4300-8C0A-0EE7A2554969</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>668857C7-9E12-4A83-A12C-1BFE8FBFE64F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>F9A81801-21B9-4EB9-A1E5-B7243E7B1F86</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>75C2A185-CAEB-436C-9005-A40D90E2595F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Saar Shechter</string>
+	<key>description</key>
+	<string>Fetch GitHub private repos and pull requests</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Pullke</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>https://github.com/{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>990CC253-1762-47B4-AB57-58A7115E06D8</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>D1361E2F-0F73-49FB-944D-70D83C046ECD</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>2</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>pullke repo</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>🔄 Loading repositories from GitHub...</string>
+				<key>script</key>
+				<string>node "./dist/search-repos.js"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Searches repositories by organizations and keywords defined in the workflow's configuration</string>
+				<key>title</key>
+				<string>Search for Repositories Across GitHub</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>icon</key>
+			<dict>
+				<key>path</key>
+				<string>icon.png</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>28A7B116-CF4B-4561-A0C6-20C63C976D52</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>A89C2559-F0A8-4888-9829-D82068604EFA</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>2</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>🔄 Loading pull requests from {query}...</string>
+				<key>script</key>
+				<string>node "./dist/search-prs.js" {query}</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Search for Pull Requests in a Given Repository</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>icon</key>
+			<dict>
+				<key>path</key>
+				<string>icon.png</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>75C2A185-CAEB-436C-9005-A40D90E2595F</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>selectedRepo</key>
+					<string>{query}</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>F9A81801-21B9-4EB9-A1E5-B7243E7B1F86</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>https://github.com/{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>OPEN_URL_ACTION_UID</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>pullke cc</string>
+				<key>subtext</key>
+				<string>Clear all cache items to fetch fresh data on the next call</string>
+				<key>text</key>
+				<string>Clear Pullke Cache</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>icon</key>
+			<dict>
+				<key>path</key>
+				<string>icon.png</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>3FC811DC-DA74-4674-8890-DD1CD15AE2D7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+				<key>title</key>
+				<string>Pullke cache was cleared 🧹💨</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>3BF5D60F-8594-4300-8C0A-0EE7A2554969</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>node "./dist/clear-cache.js"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>EB551213-C0B3-470A-BEB4-5B811BB48FC3</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>soundname</key>
+				<string>Frog</string>
+				<key>systemsound</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.playsound</string>
+			<key>uid</key>
+			<string>668857C7-9E12-4A83-A12C-1BFE8FBFE64F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string># Pullke - GitHub Repository Search Alfred Workflow
+
+A powerful Alfred workflow for quickly searching and navigating GitHub repositories within specified organizations. Built with intelligent caching and flexible authentication options.
+
+## Features
+
+- 🔍 **Smart Repository Search**: Search repositories across multiple GitHub organizations with keyword filtering
+- ⚡ **Intelligent Caching**: Configurable cache system (default 7 days) for fast subsequent searches
+- 🔐 **Flexible Authentication**: Supports both GitHub CLI and environment token authentication
+- 🎯 **Keyword Filtering**: Filter repositories by specific keywords to find relevant projects quickly
+- 📋 **Multiple Actions**: Open repositories, copy URLs, or navigate to pull requests
+- 🧹 **Cache Management**: Easy cache clearing functionality
+
+## Installation
+
+1. Download and install the workflow in Alfred
+2. Configure your authentication (see Authentication section below)
+3. Set up your organizations and keywords in the workflow configuration
+
+## Authentication
+
+The workflow supports two authentication methods (in order of priority):
+
+### 1. GitHub CLI (Recommended)
+```bash
+# Install GitHub CLI
+brew install gh
+
+# Authenticate with GitHub
+gh auth login
+```
+
+### 2. Environment Variable
+Set the `GITHUB_TOKEN` environment variable with a GitHub personal access token:
+```bash
+export GITHUB_TOKEN="your_github_token_here"
+```
+
+## Configuration
+
+Configure the workflow through Alfred's workflow configuration:
+
+### Required Settings
+
+1. **Organizations**: Comma-separated list of GitHub organizations to search
+   - Example: `myorg, anotherorg, thirdorg`
+
+2. **Keywords**: Comma-separated list of keywords to filter repositories
+   - Example: `api, frontend, backend, mobile`
+   - Repositories matching ANY of these keywords will be included
+
+### Optional Settings
+
+3. **Cache TTL (hours)**: How long to cache repository data (default: 168 hours / 7 days)
+   - Range: 0-730 hours (0 = no caching, not recommended)
+   - Higher values = faster searches but potentially stale data
+   - Lower values = fresher data but slower searches
+
+## Usage
+
+### Main Search Command
+```
+git [search term]
+```
+- Searches through cached repositories
+- Alfred's built-in filtering will narrow results as you type
+- Shows repository name, description, language, and star count
+
+### Actions Available
+
+1. **Enter**: Open repository in browser
+2. **Cmd+Enter**: Copy repository URL to clipboard  
+3. **Shift+Enter**: Open repository's pull requests page
+
+### Cache Management
+```
+git cc
+```
+- Clears the repository cache
+- Next search will fetch fresh data from GitHub
+- Useful when you've added new repositories or changed configuration
+
+## How It Works
+
+1. **First Run**: Fetches repositories from GitHub API using search queries
+2. **Caching**: Stores results locally for fast subsequent searches
+3. **Search Strategy**: 
+   - Searches each organization with OR logic for keywords
+   - Combines results from all organizations
+   - Removes duplicates and sorts by last updated
+4. **Alfred Integration**: Returns formatted results for Alfred's script filter
+
+## API Usage
+
+The workflow uses GitHub's Search API with the following strategy:
+
+- **Endpoint**: `https://api.github.com/search/repositories`
+- **Query Format**: `org:{organization} ({keyword1} OR {keyword2} OR ...)`
+- **Sorting**: By last updated (most recent first)
+- **Pagination**: Fetches up to 1000 results per organization (API limit)
+- **Rate Limiting**: Respects GitHub API rate limits
+
+## Caching System
+
+- **Location**: `~/.cache/alfred_github/repos.json`
+- **TTL**: Configurable (default 7 days)
+- **Validation**: Checks file modification time against TTL
+- **Storage**: JSON format with repository metadata
+
+## Error Handling
+
+The workflow provides helpful error messages for common issues:
+
+- **GitHub CLI not installed**: Suggests `brew install gh`
+- **GitHub CLI not authenticated**: Suggests `gh auth login`
+- **Missing organizations**: Prompts to configure organizations
+- **API errors**: Shows specific error messages
+- **Network issues**: Graceful degradation with error reporting
+
+## Troubleshooting
+
+### No repositories found
+1. Check your organizations are spelled correctly
+2. Verify your authentication is working
+3. Ensure keywords match repositories in those organizations
+4. Try clearing cache with `git cc`
+
+### Authentication issues
+1. Run `gh auth status` to check GitHub CLI authentication
+2. Verify `GITHUB_TOKEN` environment variable if using token auth
+3. Check token has appropriate repository access permissions
+
+### Slow performance
+1. Reduce cache TTL for more frequent updates
+2. Narrow down keywords to reduce result set
+3. Check network connectivity
+
+## Dependencies
+
+- **Python 3.6+**: Required for the workflow
+- **requests**: HTTP library for GitHub API calls
+- **GitHub CLI** (optional): For authentication
+
+## Contributing
+
+The workflow is designed to be easily extensible:
+
+- Add new authentication methods in `auth.py`
+- Extend search functionality in `utils.py`
+- Add new actions by modifying `info.plist` connections
+
+## License
+
+Created by Saar Shechter. See workflow configuration for attribution details.
+
+## Version
+
+Current version: 1.0.0
+
+---</string>
+	<key>uidata</key>
+	<dict>
+		<key>28A7B116-CF4B-4561-A0C6-20C63C976D52</key>
+		<dict>
+			<key>xpos</key>
+			<real>65</real>
+			<key>ypos</key>
+			<real>215</real>
+		</dict>
+		<key>3BF5D60F-8594-4300-8C0A-0EE7A2554969</key>
+		<dict>
+			<key>xpos</key>
+			<real>480</real>
+			<key>ypos</key>
+			<real>530</real>
+		</dict>
+		<key>3FC811DC-DA74-4674-8890-DD1CD15AE2D7</key>
+		<dict>
+			<key>xpos</key>
+			<real>65</real>
+			<key>ypos</key>
+			<real>530</real>
+		</dict>
+		<key>668857C7-9E12-4A83-A12C-1BFE8FBFE64F</key>
+		<dict>
+			<key>xpos</key>
+			<real>480</real>
+			<key>ypos</key>
+			<real>655</real>
+		</dict>
+		<key>75C2A185-CAEB-436C-9005-A40D90E2595F</key>
+		<dict>
+			<key>xpos</key>
+			<real>460</real>
+			<key>ypos</key>
+			<real>215</real>
+		</dict>
+		<key>990CC253-1762-47B4-AB57-58A7115E06D8</key>
+		<dict>
+			<key>note</key>
+			<string>Copy repository URL to clipboard</string>
+			<key>xpos</key>
+			<real>275</real>
+			<key>ypos</key>
+			<real>60</real>
+		</dict>
+		<key>A89C2559-F0A8-4888-9829-D82068604EFA</key>
+		<dict>
+			<key>note</key>
+			<string>Open pull request URL</string>
+			<key>xpos</key>
+			<real>665</real>
+			<key>ypos</key>
+			<real>215</real>
+		</dict>
+		<key>D1361E2F-0F73-49FB-944D-70D83C046ECD</key>
+		<dict>
+			<key>note</key>
+			<string>Copy pull request URL to clipboard</string>
+			<key>xpos</key>
+			<real>665</real>
+			<key>ypos</key>
+			<real>60</real>
+		</dict>
+		<key>EB551213-C0B3-470A-BEB4-5B811BB48FC3</key>
+		<dict>
+			<key>note</key>
+			<string>Clear cache</string>
+			<key>xpos</key>
+			<real>275</real>
+			<key>ypos</key>
+			<real>530</real>
+		</dict>
+		<key>F9A81801-21B9-4EB9-A1E5-B7243E7B1F86</key>
+		<dict>
+			<key>xpos</key>
+			<real>315</real>
+			<key>ypos</key>
+			<real>245</real>
+		</dict>
+		<key>OPEN_URL_ACTION_UID</key>
+		<dict>
+			<key>note</key>
+			<string>Open repository URL</string>
+			<key>xpos</key>
+			<real>275</real>
+			<key>ypos</key>
+			<real>340</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>placeholder</key>
+				<string>Enter organizations, separated by commas</string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>GitHub organizations to search (e.g., your company, facebook, microsoft). Separate multiple organizations with commas.</string>
+			<key>label</key>
+			<string>Organizations</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>organizations</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>placeholder</key>
+				<string>Enter keywords, separated by commas</string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Filter repositories by technology or topic (e.g., react, api, mobile). Only repos matching these keywords will be shown. Required for good performance with large organizations.</string>
+			<key>label</key>
+			<string>Keywords</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>keywords</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<false/>
+			</dict>
+			<key>description</key>
+			<string>Also show your personal GitHub repositories alongside organization repos. Your personal repos won't be filtered by keywords.</string>
+			<key>label</key>
+			<string>Include My Repositories</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>include_user_repos</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>defaultvalue</key>
+				<integer>168</integer>
+				<key>markercount</key>
+				<integer>8</integer>
+				<key>maxvalue</key>
+				<integer>730</integer>
+				<key>minvalue</key>
+				<integer>0</integer>
+				<key>onlystoponmarkers</key>
+				<false/>
+				<key>showmarkers</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>How long to remember search results before fetching fresh data from GitHub. Longer = faster searches, shorter = more up-to-date results. Default: 1 week.</string>
+			<key>label</key>
+			<string>Cache TTL (hours)</string>
+			<key>type</key>
+			<string>slider</string>
+			<key>variable</key>
+			<string>cache_ttl_hours</string>
+		</dict>
+	</array>
+	<key>variables</key>
+	<dict>
+		<key>GITHUB_TOKEN</key>
+		<string></string>
+	</dict>
+	<key>variablesdontexport</key>
+	<array>
+		<string>GITHUB_TOKEN</string>
+	</array>
+	<key>version</key>
+	<string>1.0.0</string>
+	<key>webaddress</key>
+	<string>https://github.com/saarshe/pullke</string>
+</dict>
+</plist>

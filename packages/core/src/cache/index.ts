@@ -198,7 +198,8 @@ export async function getCacheInfo(): Promise<{
  */
 export function generateRepoSearchCacheKey(
   organizations: string[],
-  keywords?: string
+  keywords?: string,
+  includeCurrentUser?: boolean
 ): string {
   const orgsKey = organizations.sort().join(',');
 
@@ -212,7 +213,9 @@ export function generateRepoSearchCacheKey(
         .join(',')
     : '';
 
-  return `repos_${orgsKey}_${keywordsKey}`;
+  const userKey = includeCurrentUser ? 'user' : '';
+
+  return `repos_${orgsKey}_${keywordsKey}_${userKey}`;
 }
 
 /**

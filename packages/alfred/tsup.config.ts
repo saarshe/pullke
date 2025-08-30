@@ -14,4 +14,7 @@ export default defineConfig({
   sourcemap: false,
   minify: false,
   target: 'node18',
+  bundle: true, // Bundle all dependencies
+  external: [], // Don't treat any dependencies as external
+  noExternal: ['@pullke/core'], // Explicitly bundle workspace dependencies
 });

@@ -1,77 +1,53 @@
 # @pullke/alfred
 
-Alfred workflow for searching GitHub repositories and pull requests with powerful filtering and caching.
-
-## Features
-
-- 🔍 **Repository Search**: Search across multiple GitHub organizations with keyword filtering
-- 🔀 **Pull Request Search**: Search recent PRs in any repository  
-- 🔐 **GitHub CLI Authentication**: Uses your existing `gh auth` setup
-- ⚡ **Smart Caching**: Fast results with configurable cache TTL
-- 🎯 **Alfred Actions**: Open in browser, copy URL, view PRs with keyboard modifiers
+Alfred workflow for searching GitHub repositories and pull requests.
 
 ## Installation
 
-### 1. Clone and Build
+### Prerequisites
+- Alfred 4+ with Powerpack
+- Node.js 18+
+- GitHub CLI: `brew install gh && gh auth login`
 
-```bash
-# Clone the repository
-git clone https://github.com/saarshe/pullke.git
+### Install Workflow
 
-# Install dependencies and build
-cd pullke
-yarn install
-yarn build
-```
-
-### 2. Setup GitHub Authentication
-
-```bash
-# Install GitHub CLI if not already installed
-brew install gh
-
-# Authenticate with GitHub
-gh auth login
-```
-
-### 3. Download Alfred Workflow
-
-> Download link TBD
-
-After downloading, double-click the `.alfredworkflow` file to install it.
-
-## Usage
-
-### Repository Search
-Type `pullke` in Alfred → Browse repos → Select a repository:
-
-- **Enter**: Open Pull Requests search for selected repo
-- **⌘ + Enter**: Open repository in browser  
-- **⌥ + Enter**: Copy repository URL to clipboard
-
-### Pull Request Search  
-Browse recent PRs → Select a pull request:
-
-- **Enter**: Open pull request in browser
-- **⌥ + Enter**: Copy pull request URL to clipboard
+1. Download `Pullke.alfredworkflow` from [Releases](https://github.com/saarshe/pullke/releases)
+2. Double-click to install in Alfred
 
 ## Configuration
 
-### Environment Variables
+After installation, configure in Alfred's workflow settings:
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `organizations` | Comma-separated GitHub orgs to search | Required |
-| `keywords` | Filter repos by keywords | Optional |
-| `cache_ttl_hours` | Cache duration in hours | 168 (7 days) |
-| `selectedRepo` | Repository for PR search (format: owner/repo) | From Alfred query |
+1. **Organizations** - Which GitHub organizations to search (required)
+   - Examples: `mycompany, facebook, microsoft`
+   - Works with both public and private organizations (if you have access)
+
+2. **Keywords** - What types of repositories to find (required)
+   - Examples: `react, api, mobile, frontend, typescript`
+   - Searches in: repository names, descriptions, and topics/tags
+   - Shows repos matching ANY of these keywords
+   - Required for good performance with large organizations
+
+3. **Include My Repositories** - Also show your personal repos
+   - Shows ALL your personal repositories (no keyword filtering)
+   - Useful for finding your own projects alongside company repos
+
+4. **Cache Duration** - How long to remember results locally (default: 1 week)
+   - Longer = faster searches, shorter = more up-to-date results
+   - All data stays on your machine (no external servers)
+
+
+## Usage
+
+- `pullke repo` - Search repositories
+- `pullke cc` - Clear cache
+
+### Actions
+- **Enter** - Open pull requests for selected repo
+- **⌘ + Enter** - Open repository in browser  
+- **⌥ + Enter** - Copy repository URL
 
 ## Requirements
 
-- **Node.js 18+**
-- **GitHub CLI** (`gh`)
-- **Alfred 4+** with Powerpack
-
----
-
-Made with ❤️ for faster GitHub navigation
+- GitHub CLI (`gh`) or `GITHUB_TOKEN` environment variable
+- Organizations and keywords configured in workflow settings
