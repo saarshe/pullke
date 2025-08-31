@@ -25,7 +25,7 @@ export async function searchRepositories(
       const result = await getFromCacheOrFetch({
         key: cacheKey,
         fetchFn: () => fetchRepositoriesFromGitHub(options),
-        customTtl: options.cacheTtl,
+        customTtl: options.cacheTtl, // If not provided, will use default repo TTL (1 week)
       });
 
       return {

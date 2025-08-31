@@ -13,6 +13,7 @@ import {
   getCacheInfo,
   generateRepoSearchCacheKey,
   generatePRSearchCacheKey,
+  sanitizeCacheKey,
 } from './index';
 
 describe('Cache', () => {
@@ -20,7 +21,11 @@ describe('Cache', () => {
 
   beforeEach(async () => {
     testCacheDir = path.join(os.tmpdir(), `pullke-test-cache-${Date.now()}`);
-    configureCacheSettings({ cacheDir: testCacheDir, ttl: 60 });
+    configureCacheSettings({
+      cacheDir: testCacheDir,
+      repoTtl: 120, // 2 minutes for testing
+      prTtl: 30, // 30 seconds for testing
+    });
   });
 
   afterEach(async () => {
@@ -157,6 +162,114 @@ describe('Cache', () => {
       expect(info.cacheDir).toBe(testCacheDir);
       expect(info.files).toBe(2);
       expect(info.totalSize).toBeGreaterThan(0);
+    });
+  });
+
+  describe('separate TTL functionality', () => {
+    it('should use repo TTL for repository cache keys', async () => {
+      const repoKey = generateRepoSearchCacheKey(['org1'], 'test');
+      const testData = { repos: ['repo1', 'repo2'] };
+
+      await setCache(repoKey, testData);
+
+      // Read the cache file directly to verify TTL
+      const cacheFilePath = path.join(
+        testCacheDir,
+        `${sanitizeCacheKey(repoKey)}.json`
+      );
+      const content = await fs.readFile(cacheFilePath, 'utf-8');
+      const cacheEntry = JSON.parse(content);
+
+      expect(cacheEntry.ttl).toBe(120); // Should use repo TTL (from test config)
+    });
+
+    it('should use PR TTL for pull request cache keys', async () => {
+      const prKey = generatePRSearchCacheKey('owner', 'repo', {
+        states: ['open'],
+      });
+      const testData = { prs: ['pr1', 'pr2'] };
+
+      await setCache(prKey, testData);
+
+      // Read the cache file directly to verify TTL
+      const cacheFilePath = path.join(
+        testCacheDir,
+        `${sanitizeCacheKey(prKey)}.json`
+      );
+      const content = await fs.readFile(cacheFilePath, 'utf-8');
+      const cacheEntry = JSON.parse(content);
+
+      expect(cacheEntry.ttl).toBe(30); // Should use PR TTL (from test config)
+    });
+
+    it('should use custom TTL when provided', async () => {
+      const customTtl = 300; // 5 minutes
+      const repoKey = generateRepoSearchCacheKey(['org1'], 'test');
+      const testData = { repos: ['repo1'] };
+
+      await setCache(repoKey, testData, customTtl);
+
+      // Read the cache file directly to verify TTL
+      const cacheFilePath = path.join(
+        testCacheDir,
+        `${sanitizeCacheKey(repoKey)}.json`
+      );
+      const content = await fs.readFile(cacheFilePath, 'utf-8');
+      const cacheEntry = JSON.parse(content);
+
+      expect(cacheEntry.ttl).toBe(customTtl); // Should use custom TTL, not default repo TTL
+    });
+
+    it('should use appropriate TTL in getFromCacheOrFetch', async () => {
+      const fetchMock = vi.fn(() => Promise.resolve({ data: 'fetched' }));
+
+      // Test with repo key
+      const repoKey = generateRepoSearchCacheKey(['org1'], 'test');
+      await getFromCacheOrFetch({
+        key: repoKey,
+        fetchFn: fetchMock,
+      });
+
+      // Test with PR key
+      const prKey = generatePRSearchCacheKey('owner', 'repo', {
+        states: ['open'],
+      });
+      await getFromCacheOrFetch({
+        key: prKey,
+        fetchFn: fetchMock,
+      });
+
+      // Verify both cache entries have correct TTLs
+      const repoCacheFilePath = path.join(
+        testCacheDir,
+        `${sanitizeCacheKey(repoKey)}.json`
+      );
+      const repoContent = await fs.readFile(repoCacheFilePath, 'utf-8');
+      const repoCacheEntry = JSON.parse(repoContent);
+
+      const prCacheFilePath = path.join(
+        testCacheDir,
+        `${sanitizeCacheKey(prKey)}.json`
+      );
+      const prContent = await fs.readFile(prCacheFilePath, 'utf-8');
+      const prCacheEntry = JSON.parse(prContent);
+
+      expect(repoCacheEntry.ttl).toBe(120); // Repo TTL (from test config)
+      expect(prCacheEntry.ttl).toBe(30); // PR TTL (from test config)
+    });
+
+    it('should use repo TTL as fallback for unknown key types', async () => {
+      // Test with a key that doesn't start with 'repos_' or 'prs_'
+      const genericKey = 'generic_key';
+      const testData = { data: 'test' };
+
+      await setCache(genericKey, testData);
+
+      const cacheFilePath = path.join(testCacheDir, `${genericKey}.json`);
+      const content = await fs.readFile(cacheFilePath, 'utf-8');
+      const cacheEntry = JSON.parse(content);
+
+      expect(cacheEntry.ttl).toBe(120); // Should use repo TTL as fallback (from test config)
     });
   });
 });

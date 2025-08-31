@@ -7,7 +7,8 @@ import { AlfredItem, AlfredResult, AlfredConfig } from './types.js';
 export function getAlfredConfig(): AlfredConfig {
   const organizations = process.env.organizations;
   const keywords = process.env.keywords;
-  const cacheTtlHours = process.env.cache_ttl_hours;
+  const repoCacheTtlHours = process.env.repo_cache_ttl_hours;
+  const prCacheTtlHours = process.env.pr_cache_ttl_hours;
   const includeUserRepos = process.env.include_user_repos;
 
   if (!organizations) {
@@ -20,7 +21,12 @@ export function getAlfredConfig(): AlfredConfig {
       .map(org => org.trim())
       .filter(Boolean),
     keywords: keywords?.trim() || undefined,
-    cacheTtlHours: cacheTtlHours ? parseInt(cacheTtlHours, 10) : 168, // Default 7 days
+    repoCacheTtlHours: repoCacheTtlHours
+      ? parseInt(repoCacheTtlHours, 10)
+      : undefined,
+    prCacheTtlHours: prCacheTtlHours
+      ? parseInt(prCacheTtlHours, 10)
+      : undefined,
     includeUserRepos: includeUserRepos === '1' || includeUserRepos === 'true',
   };
 }

@@ -2,6 +2,7 @@
 
 import { searchPullRequests, getGitHubAuthErrorInfo } from '@pullke/core';
 import {
+  getAlfredConfig,
   createPullRequestItem,
   createErrorItem,
   createAlfredResult,
@@ -10,6 +11,8 @@ import {
 
 async function main() {
   try {
+    const config = getAlfredConfig();
+
     // Get repository from Alfred environment variable
     const selectedRepo = process.env.selectedRepo;
 
@@ -46,6 +49,9 @@ async function main() {
         sort: 'updated',
         order: 'desc',
         maxResults: 100,
+        cacheTtl: config.prCacheTtlHours
+          ? config.prCacheTtlHours * 3600
+          : undefined,
       },
     });
 

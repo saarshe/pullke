@@ -4,13 +4,15 @@ import os from 'os';
 import { CacheEntry, CacheOptions } from '../types/github';
 
 // Default cache configuration
-const DEFAULT_TTL = 168 * 60 * 60; // 7 days in seconds
+const DEFAULT_REPO_TTL = 7 * 24 * 60 * 60; // 1 week in seconds
+const DEFAULT_PR_TTL = 24 * 60 * 60; // 24 hours in seconds
 const DEFAULT_CACHE_DIR = path.join(os.homedir(), '.cache', 'pullke');
 
 // Global cache configuration
 let cacheConfig = {
   cacheDir: DEFAULT_CACHE_DIR,
-  defaultTtl: DEFAULT_TTL,
+  repoTtl: DEFAULT_REPO_TTL,
+  prTtl: DEFAULT_PR_TTL,
 };
 
 /**
@@ -19,7 +21,8 @@ let cacheConfig = {
 export function configureCacheSettings(options: CacheOptions = {}): void {
   cacheConfig = {
     cacheDir: options.cacheDir || DEFAULT_CACHE_DIR,
-    defaultTtl: options.ttl || DEFAULT_TTL,
+    repoTtl: options.repoTtl || DEFAULT_REPO_TTL,
+    prTtl: options.prTtl || DEFAULT_PR_TTL,
   };
 }
 
@@ -36,11 +39,18 @@ async function ensureCacheDir(): Promise<void> {
 }
 
 /**
+ * Sanitize a cache key to be safe for file system usage
+ */
+export function sanitizeCacheKey(key: string): string {
+  return key.replace(/[^a-zA-Z0-9-_]/g, '_');
+}
+
+/**
  * Generate cache file path for a given key
  */
 function getCacheFilePath(key: string): string {
   // Sanitize key to be safe for file system
-  const sanitizedKey = key.replace(/[^a-zA-Z0-9-_]/g, '_');
+  const sanitizedKey = sanitizeCacheKey(key);
   return path.join(cacheConfig.cacheDir, `${sanitizedKey}.json`);
 }
 
@@ -70,7 +80,7 @@ export async function setCache<T>(
 ): Promise<void> {
   try {
     await ensureCacheDir();
-    const ttl = customTtl || cacheConfig.defaultTtl;
+    const ttl = customTtl || getDefaultTtlForKey(key);
     const cacheEntry: CacheEntry<T> = {
       data,
       timestamp: Date.now(),
@@ -107,6 +117,19 @@ export async function getCache<T>(key: string): Promise<T | null> {
 }
 
 /**
+ * Get the appropriate default TTL based on cache key type
+ */
+function getDefaultTtlForKey(key: string): number {
+  if (key.startsWith('repos_')) {
+    return cacheConfig.repoTtl;
+  } else if (key.startsWith('prs_')) {
+    return cacheConfig.prTtl;
+  }
+  // Fallback to repo TTL for unknown key types
+  return cacheConfig.repoTtl;
+}
+
+/**
  * Get data from cache or fetch using the provided function
  */
 export async function getFromCacheOrFetch<T>({
@@ -130,9 +153,10 @@ export async function getFromCacheOrFetch<T>({
     console.error(`⏰ Cache miss for "${key}", fetching fresh data...`);
     const freshData = await fetchFn();
 
-    // Save to cache
-    await setCache(key, freshData, customTtl);
-    console.error(`✅ Cached fresh data for: ${key}`);
+    // Save to cache with appropriate TTL
+    const ttlToUse = customTtl || getDefaultTtlForKey(key);
+    await setCache(key, freshData, ttlToUse);
+    console.error(`✅ Cached fresh data for: ${key} (TTL: ${ttlToUse}s)`);
 
     return { data: freshData, cached: false };
   } catch (error) {
