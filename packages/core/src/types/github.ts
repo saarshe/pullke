@@ -29,7 +29,8 @@ export interface CacheEntry<T> {
 }
 
 export interface CacheOptions {
-  ttl?: number; // TTL in seconds, defaults to 168 hours (7 days)
+  repoTtl?: number; // TTL for repository cache in seconds
+  prTtl?: number; // TTL for pull request cache in seconds
   cacheDir?: string; // Custom cache directory
 }
 

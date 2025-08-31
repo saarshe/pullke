@@ -21,6 +21,9 @@ async function main() {
       maxResults: 1000,
       maxPages: 10,
       includeCurrentUser: config.includeUserRepos,
+      cacheTtl: config.repoCacheTtlHours
+        ? config.repoCacheTtlHours * 3600
+        : undefined,
     });
 
     if (!result.success) {

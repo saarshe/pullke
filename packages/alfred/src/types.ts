@@ -27,6 +27,7 @@ export interface AlfredResult {
 export interface AlfredConfig {
   organizations: string[];
   keywords?: string;
-  cacheTtlHours?: number;
+  repoCacheTtlHours?: number;
+  prCacheTtlHours?: number;
   includeUserRepos?: boolean;
 }

@@ -425,18 +425,13 @@ Alfred workflow for searching GitHub repositories and pull requests.
 
 After installation, configure in Alfred's workflow settings:
 
-1. **Organizations** - GitHub orgs to search (required)
-   - Example: `mycompany, facebook, microsoft`
+1. **Organizations** - GitHub orgs to search (required). Example: mycompany, facebook, microsoft
 
-2. **Keywords** - Repository types to find (required)
-   - Example: `react, api, mobile, frontend, typescript`
-   - Matches repository names, descriptions, and topics
+2. **Keywords** - Repository types to find (required). Example: react, api, mobile, frontend, typescript. Matches repository names, descriptions, and topics.
 
-3. **Include My Repositories** - Also show your personal repos
-   - No keyword filtering applied to personal repos
+3. **Include My Repositories** - Also show your personal repos. No keyword filtering applied to personal repos.
 
-4. **Cache Duration** - How long to cache results (default: 1 week)
-   - Longer = faster, shorter = fresher data
+4. **Cache Duration** - How long to cache results (default: 1 week for repositories, 1 day for pull requests). Longer = faster, shorter = fresher data.
 
 ## Usage
 
@@ -622,27 +617,44 @@ Created by Saar Shechter</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>defaultvalue</key>
-				<integer>168</integer>
-				<key>markercount</key>
-				<integer>8</integer>
-				<key>maxvalue</key>
-				<integer>730</integer>
-				<key>minvalue</key>
-				<integer>0</integer>
-				<key>onlystoponmarkers</key>
+				<key>default</key>
+				<string>168</string>
+				<key>placeholder</key>
+				<string>168 (1 week)</string>
+				<key>required</key>
 				<false/>
-				<key>showmarkers</key>
+				<key>trim</key>
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>How long to remember search results before fetching fresh data from GitHub. Longer = faster searches, shorter = more up-to-date results. Default: 1 week.</string>
+			<string>How long to cache repository search results (in hours). Default: 168 hours (1 week).</string>
 			<key>label</key>
-			<string>Cache TTL (hours)</string>
+			<string>Repository Cache TTL (hours)</string>
 			<key>type</key>
-			<string>slider</string>
+			<string>textfield</string>
 			<key>variable</key>
-			<string>cache_ttl_hours</string>
+			<string>repo_cache_ttl_hours</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>24</string>
+				<key>placeholder</key>
+				<string>24 (1 day)</string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>How long to cache pull request search results (in hours). Default: 24 hours (1 day).</string>
+			<key>label</key>
+			<string>Pull Request Cache TTL (hours)</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>pr_cache_ttl_hours</string>
 		</dict>
 	</array>
 	<key>variables</key>
