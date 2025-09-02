@@ -1,6 +1,25 @@
 # @pullke/alfred
 
+<p align="center">
+  <img src="workflow/icon-medium.png" alt="Pullke Alfred Workflow Icon">
+</p>
+
 Alfred workflow for searching GitHub repositories and pull requests.
+
+## Screenshots
+
+### Repository Search
+![Repository Search](screenshots/repo-search.png)
+*Search repositories across your organizations with keyword filtering*
+
+### Pull Requests Search
+![Pull Requests Search](screenshots/pr-search.png)
+*Search pull requests across your repositories with filtering by title (coming soon - filter by author, status, creation date, etc.)*
+
+### Configuration Settings
+![Configuration](screenshots/configuration.png)
+*Easy setup through Alfred's workflow preferences*
+
 
 ## Installation
 
@@ -39,7 +58,7 @@ After installation, configure in Alfred's workflow settings:
 
 ## Usage
 
-- `pullke repo` - Search repositories
+- `pullke` - Search repositories
 - `pullke cc` - Clear cache
 
 ### Actions

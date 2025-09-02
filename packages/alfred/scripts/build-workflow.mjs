@@ -74,7 +74,7 @@ try {
   console.log('🚀 To install:');
   console.log('   1. Double-click the .alfredworkflow file');
   console.log('   2. Configure organizations and keywords in Alfred\'s workflow settings');
-  console.log('   3. Use \'pullke repo\' to search repositories');
+  console.log('   3. Use \'pullke\' to search repositories');
   console.log('   4. Use \'pullke cc\' to clear cache');
 
 } catch (error) {
