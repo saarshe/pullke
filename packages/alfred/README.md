@@ -24,7 +24,7 @@ Alfred workflow for searching GitHub repositories and pull requests.
 ## Installation
 
 ### Prerequisites
-- Alfred 4+ with Powerpack
+- Alfred 5+ with Powerpack
 - Node.js 18+
 - GitHub CLI: `brew install gh && gh auth login`
 
