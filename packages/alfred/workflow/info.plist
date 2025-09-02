@@ -120,6 +120,11 @@
 	<string>Fetch GitHub private repos and pull requests</string>
 	<key>disabled</key>
 	<false/>
+	<key>icon</key>
+	<dict>
+		<key>path</key>
+		<string>icon.png</string>
+	</dict>
 	<key>name</key>
 	<string>Pullke</string>
 	<key>objects</key>
@@ -178,7 +183,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>pullke repo</string>
+				<string>pullke</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -419,6 +424,8 @@
 	<key>readme</key>
 	<string># Pullke Alfred Workflow
 
+![Pullke Icon](icon-small.png)
+
 Alfred workflow for searching GitHub repositories and pull requests.
 
 ## Configuration
@@ -436,7 +443,7 @@ After installation, configure in Alfred's workflow settings:
 ## Usage
 
 ### Search Repositories
-- `pullke repo` - Search and browse repositories
+- `pullke` - Search and browse repositories
 - Select any repository from the results to see available actions
 - `pullke cc` - Clear cache and force a fresh search on the next call
 
@@ -446,7 +453,7 @@ After installation, configure in Alfred's workflow settings:
 - **⌥ + Enter** - Copy repository URL to clipboard
 
 ### Workflow
-1. Type `pullke repo` to search repositories
+1. Type `pullke` to search repositories
 2. Select a repository from the results
 3. Choose an action (Enter for pull requests, ⌘+Enter for browser, ⌥+Enter to copy URL)
 

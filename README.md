@@ -26,7 +26,7 @@ Quickly search GitHub repositories and pull requests across multiple organizatio
 1. Download `Pullke.alfredworkflow` from [Releases](https://github.com/saarshe/pullke/releases)
 2. Double-click to install in Alfred
 3. Configure organizations and keywords in Alfred's workflow settings
-4. Use `pullke repo` to search repositories
+4. Use `pullke` to search repositories
 
 ## Contributing
 
